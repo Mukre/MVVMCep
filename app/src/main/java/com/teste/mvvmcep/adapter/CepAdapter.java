@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.teste.mvvmcep.R;
 import com.teste.mvvmcep.model.Cep;
@@ -38,6 +39,7 @@ public class CepAdapter extends RecyclerView.Adapter<CepHolder> {
                 snackbar.show();
             }
         });
+
     }
 
     @Override
@@ -45,12 +47,12 @@ public class CepAdapter extends RecyclerView.Adapter<CepHolder> {
         return cepList != null ? cepList.size() : 0;
     }
 
-    public void adicionarCep(Cep cep) {
+    public void addCep(Cep cep) {
         cepList.add(0, cep);
         notifyItemInserted(0);
     }
 
-    public void removerCep(Cep cep) {
+    public void removeCep(Cep cep) {
         int position = cepList.indexOf(cep);
         cepList.remove(position);
         notifyItemRemoved(position);
@@ -60,11 +62,13 @@ public class CepAdapter extends RecyclerView.Adapter<CepHolder> {
 class CepHolder extends RecyclerView.ViewHolder {
     public TextView cep_textview;
     public ImageButton button_search;
+    public Chip chip_delete;
 
     public CepHolder(@NonNull View itemView) {
         super(itemView);
         cep_textview = itemView.findViewById(R.id.cep_text_view);
         button_search = itemView.findViewById(R.id.search_button);
+        chip_delete = itemView.findViewById(R.id.chip_delete);
 
     }
 }

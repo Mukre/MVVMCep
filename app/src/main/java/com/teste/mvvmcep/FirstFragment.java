@@ -17,6 +17,7 @@ import com.teste.mvvmcep.adapter.CepAdapter;
 import com.teste.mvvmcep.databinding.FragmentFirstBinding;
 import com.teste.mvvmcep.model.Cep;
 
+import java.util.Collections;
 import java.util.List;
 
 public class FirstFragment extends Fragment {
@@ -26,6 +27,7 @@ public class FirstFragment extends Fragment {
     private NavController navController;
     CepAdapter adapter;
     RecyclerView recyclerView;
+    boolean erease = false;
 
     @Override
     public View onCreateView(
@@ -58,7 +60,15 @@ public class FirstFragment extends Fragment {
                 navController.navigate(R.id.SecondFragment);
             }
         });
-        configurarRecycler(this.getView());
+        binding.deleteFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                erease = true;
+
+
+            }
+        });
+        configurarRecycler();
     }
 
     @Override
@@ -85,16 +95,16 @@ public class FirstFragment extends Fragment {
         }
     }
 
-    private void configurarRecycler(View v) {
+    private void configurarRecycler() {
         //Configurando o gerenciador de layout para ser uma lista
-        recyclerView = v.findViewById(R.id.recycler_view);
+        recyclerView = binding.recyclerView;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         // Adiciona o adapter que irá anexar os objetos à lista.
         List<Cep> listCep = Cep.listAll(Cep.class);
-        listCep.
-        adapter = new CepAdapter(Cep.listAll(Cep.class));
+        Collections.reverse(listCep);
+        adapter = new CepAdapter(listCep);
         recyclerView.setAdapter(adapter);
         adapter.getItemCount();
         recyclerView.addItemDecoration(new DividerItemDecoration(this.getContext(), DividerItemDecoration.HORIZONTAL));
